@@ -1,12 +1,23 @@
 import React from "react";
 import Task from "../Task";
 
-const TaskList = ({items}) => {
 
-const elements = items.map(({id, classNames, ...itemsProps}) => {
+export default class TaskList extends React.Component {
+
+  render() {
+   const { items, onCheckDone, onDeleted } = this.props;
+ 
+   const elements = items.map(({id, editable, ...itemProps}) => {
+
+    let classNames = "";
+    if (itemProps.done) classNames += "completed";
+    if (editable) classNames += "editing";
+
     return (
       <li key={id} className={classNames}>
-        <Task {...itemsProps} />
+        <Task {...itemProps}
+              onCheckDone={() => onCheckDone(id)}
+              onDeleted={() => onDeleted(id)} />
       </li>
       
     )
@@ -17,6 +28,6 @@ const elements = items.map(({id, classNames, ...itemsProps}) => {
       {elements}
     </ul>
   );
-}
+  }
 
-export default TaskList;
+}

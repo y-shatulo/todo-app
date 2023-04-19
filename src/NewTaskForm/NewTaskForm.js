@@ -1,6 +1,7 @@
 import React from "react";
 
-const NewTaskForm = () => {
+export default class NewTaskForm extends React.Component {
+ render() {
   return (
     <header className="header">
       <h1>todos</h1>
@@ -9,6 +10,6 @@ const NewTaskForm = () => {
              autoFocus></input>
     </header>
   );
+ }
 }
 
-export default NewTaskForm;
