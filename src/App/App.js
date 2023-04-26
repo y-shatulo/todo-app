@@ -7,6 +7,8 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default class App extends React.Component {
 
+  nextId = 4;
+
   state = {
     items: [
       {
@@ -21,7 +23,7 @@ export default class App extends React.Component {
         id: 2,
         description: 'Editing task',
         created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
-        done: false,
+        done: true,
         editable: true,
       },
       {
@@ -31,9 +33,26 @@ export default class App extends React.Component {
         done: false,
         editable: false,
       },
-    ]
+    ],
+    filter: 'all',
   } 
  
+  createItem(description) {
+    return {
+      id: ++this.nextId,
+      description,
+      created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
+      done: false,
+      editable: false,
+    };
+  }
+
+  onItemAdded = (description) => {
+    this.setState((state) => {
+      const item = this.createItem(description);
+      return { items: [...state.items, item] };
+    })
+  };
 
 
   onCheckDone = (id) => {
@@ -58,15 +77,51 @@ export default class App extends React.Component {
     });
   }
 
+  filter (items, filter) {
+    switch(filter) {
+      case 'all':
+        return items;
+      case 'active':
+        return items.filter((item) => !item.done);
+      case 'completed':
+        return items.filter((item) => item.done);
+      default: 
+      return items;
+    }
+  }
+
+  onFilterChange = (filter) => {
+    this.setState({ filter });
+  }
+
+  onClearCompleted = () => {
+    this.setState(({ items }) => {
+      const newArray = items.filter((item) => !item.done);
+      return {
+        items: newArray,
+      };
+    });
+  }
+
   render () {
+
+    const { items, filter } = this.state;
+    const visibleList = this.filter(items, filter);
+    const activeCount = items.filter((item) => !item.done).length;
+
+
     return (
+      
       <section className="todoapp">
-        <NewTaskForm />
+        <NewTaskForm onItemAdded={this.onItemAdded}/>
         <section className="main">
-          <TaskList items={this.state.items}
+          <TaskList items={visibleList}
                     onCheckDone={this.onCheckDone}
                     onDeleted={this.deleteItem} />
-          <Footer />
+          <Footer filter={filter}
+                  activeCount={activeCount}
+                  onFilterChange={this.onFilterChange}
+                  onClearCompleted={this.onClearCompleted}/>
         </section>
       </section>
     );
