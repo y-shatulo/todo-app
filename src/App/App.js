@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import NewTaskForm from "../NewTaskForm";
 import TaskList from "../TaskList";
@@ -7,39 +8,16 @@ import { formatDistanceToNow } from 'date-fns';
 
 export default class App extends React.Component {
 
-  nextId = 4;
+  nextId = 0;
 
   state = {
-    items: [
-      {
-        id: 1,
-        description: 'Completed task',
-        created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
-        done: true,
-        editable: false,
-
-      },
-      {
-        id: 2,
-        description: 'Editing task',
-        created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
-        done: true,
-        editable: true,
-      },
-      {
-        id: 3,
-        description: 'Active task',
-        created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
-        done: false,
-        editable: false,
-      },
-    ],
+    items: [],
     filter: 'all',
   } 
  
   createItem(description) {
     return {
-      id: ++this.nextId,
+      id: this.nextId++,
       description,
       created: `created ${formatDistanceToNow(new Date(), { addSuffix: true })}`,
       done: false,

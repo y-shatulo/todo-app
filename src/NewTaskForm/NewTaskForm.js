@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default class NewTaskForm extends React.Component {
 
@@ -8,29 +9,38 @@ export default class NewTaskForm extends React.Component {
 
   onLabelChange = (e) => {
     this.setState({
-      label: e.target.value
+      label: e.target.value,
     })
   };
 
   onSubmit = (e) => {
     if (e.keyCode === 13) {
-        this.props.onItemAdded(e.target.value)
-        e.target.value = ""
+        this.props.onItemAdded(e.target.value);
+        e.target.value = "";
     }
-}
+  }
 
- render() {
+  static defaultProps = {
+    onLabelChange: () => {},
+  };
 
-  return (
-    <header className="header">
-      <h1>todos</h1>
-      <input className="new-todo"
-             placeholder="What needs to be done?"
-             autoFocus
-             onChange={this.onLabelChange}
-             onKeyDown={this.onSubmit}></input>
-    </header>
-  );
- }
+  static propTypes = {
+    onLabelChange: PropTypes.func,
+  };
+
+  render() {
+    const {onLabelChange} = this.props;
+
+    return (
+      <header className="header">
+        <h1>todos</h1>
+        <input className="new-todo"
+              placeholder="What needs to be done?"
+              autoFocus
+              onChange={onLabelChange}
+              onKeyDown={this.onSubmit}></input>
+      </header>
+    );
+  }
 }
 
