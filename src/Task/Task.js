@@ -12,7 +12,7 @@ export default class Task extends React.Component {
 
   static propTypes = {
     description: PropTypes.string,
-    created: PropTypes.number,
+    created: PropTypes.string,
     onCheckDone: PropTypes.func,
     onDeleted: PropTypes.func,
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import Task from "../Task";
 import PropTypes from 'prop-types';
+import './TaskList.css';
 
 
 export default class TaskList extends React.Component {
