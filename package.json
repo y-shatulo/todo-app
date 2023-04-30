@@ -54,5 +54,12 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "npm run format",
+      "git add"
+    ]
   }
 }
