@@ -1,9 +1,8 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
 import './TaskFilter.css';
 
 export default class TaskFilter extends React.Component {
-
   buttons = [
     {
       name: 'all',
@@ -36,20 +35,14 @@ export default class TaskFilter extends React.Component {
       const isActive = filter === name;
       const className = isActive ? 'selected' : '';
       return (
-        <li key={name} >
-            <button className={className}
-              onClick={() => onFilterChange(name)} >
-          {label}
-        </button>
+        <li key={name}>
+          <button className={className} onClick={() => onFilterChange(name)}>
+            {label}
+          </button>
         </li>
-      )
-    })
-
-    return (
-      <ul className="filters">
-        {buttons}
-      </ul>
       );
+    });
+
+    return <ul className="filters">{buttons}</ul>;
   }
 }
-

@@ -1,25 +1,24 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
 import './NewTaskForm.css';
 
 export default class NewTaskForm extends React.Component {
-
   state = {
-    label: ''
+    label: '',
   };
 
   onLabelChange = (e) => {
     this.setState({
       label: e.target.value,
-    })
+    });
   };
 
   onSubmit = (e) => {
     if (e.keyCode === 13) {
-        this.props.onItemAdded(e.target.value);
-        e.target.value = "";
+      this.props.onItemAdded(e.target.value);
+      e.target.value = '';
     }
-  }
+  };
 
   static defaultProps = {
     onLabelChange: () => {},
@@ -30,18 +29,19 @@ export default class NewTaskForm extends React.Component {
   };
 
   render() {
-    const {onLabelChange} = this.props;
+    const { onLabelChange } = this.props;
 
     return (
       <header className="header">
         <h1>todos</h1>
-        <input className="new-todo"
-              placeholder="What needs to be done?"
-              autoFocus
-              onChange={onLabelChange}
-              onKeyDown={this.onSubmit}></input>
+        <input
+          className="new-todo"
+          placeholder="What needs to be done?"
+          autoFocus
+          onChange={onLabelChange}
+          onKeyDown={this.onSubmit}
+        ></input>
       </header>
     );
   }
 }
-
